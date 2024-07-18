@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    .container {
+    display: flex;
+    }
+</style>
+<title>Sequential Loading of iframes</title>
+</head>
+<body>
+   <h1>Sequential Loading of iframes</h1>
+
+   <!-- Placeholder divs for iframes -->
+   <div id="iframe-container" class="container">
+       <div class="iframe-wrapper" data-src="https://bj.afreecatv.com/heeheezzz"></div>
+       <div class="iframe-wrapper" data-src="https://bj.afreecatv.com/heeheezzz"></div>
+
+
+
+
+   </div>
+
+   <script>
+       // Function to load iframes sequentially
+       function loadIframesSequentially() {
+           var iframeWrappers = document.querySelectorAll('.iframe-wrapper');
+
+           // Recursive function to load each iframe
+           function loadIframe(index) {
+               if (index < iframeWrappers.length) {
+                   var iframeWrapper = iframeWrappers[index];
+                   var iframe = document.createElement('iframe');
+                   iframe.src = iframeWrapper.getAttribute('data-src');
+                   iframe.width = '8';
+                   iframe.height = '8';
+                   iframe.title = 'Sandboxed iframe';
+                   iframeWrapper.appendChild(iframe);
+
+                   // Wait for the iframe to load before loading the next one
+                   iframe.onload = function() {
+                       loadIframe(index + 1);
+                   };
+               }
+           }
+
+           // Start loading iframes from index 0
+           loadIframe(0);
+       }
+
+       // Trigger sequential loading when the page loads
+       window.onload = function() {
+           loadIframesSequentially();
+       };
+
+
+
+
+        setInterval(() => {
+            location.reload(); // 페이지 새로고침
+        }, 150); // 5000ms = 5초
+
+   </script>
+</body>
+</html>
