@@ -1,68 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>빼빼로 뽑기</title>
+    <style>
+        body {
+            font-family: 'Gowun Dodum', serif;
+            text-align: center;
+            margin-top: 18px;
+            background-color: transparent;
+            align-items: center;
+            justify-content: center;
+        }
 
-<style>
-    .container {
-    display: flex;
-    }
-</style>
-<title>Sequential Loading of iframes</title>
+        .high {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            height: 55px;
+            width: 357px;
+            background-color: #fbffbfb8;
+            letter-spacing: -2px;
+            font-size: 22px;
+            line-height: 28px;
+            color: #3a2733;
+            opacity: 0.8;
+            border-radius: 0px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .center-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 358px;
+            margin-top: 0px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(6, 57px);
+            gap: 3px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0px;
+            background: url('your.png');
+            background-size: cover;
+            position: relative;
+            opacity: 0.9;
+            margin-top: 0px;
+        }
+        .grid-item {
+            border: 1px solid #ddd;
+            width: 55px;
+            height: 55px;
+            font-size: 26px;
+            cursor: pointer;
+            display: flex;
+            align-items: top;
+            justify-content: center;
+            position: relative;
+            perspective: 1000px;
+            overflow: hidden;
+            opacity: 1.0;
+            word-break: keep-all;
+        }
+        .card {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-in-out;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            opacity: 1.0;
+        }
+        .card.flipped {
+            transform: rotateY(180deg);
+            opacity: 1.0;
+        }
+        .front, .back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1.0;
+        }
+        .front {
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .back {
+            transform: rotateY(180deg);
+            color: black;
+            visibility: hidden;
+        }
+        .back.loser {
+            background-color: #2e9;
+            visibility: visible;
+        }
+        .back.winner {
+            background-color: yellow;
+            visibility: visible;
+        }
+    </style>
 </head>
 <body>
-   <h1>Sequential Loading of iframes</h1>
+    <div class="high">
+        <img src='title.png'>
+</p>
+    </div>
+    <div class="center-container">
+        <div class="grid-container" id="gridContainer"></div>
+    </div>
+    <p id="result"></p>
 
-   <!-- Placeholder divs for iframes -->
-   <div id="iframe-container" class="container">
-       <div class="iframe-wrapper" data-src="https://bj.afreecatv.com/heeheezzz"></div>
-       <div class="iframe-wrapper" data-src="https://bj.afreecatv.com/heeheezzz"></div>
-       <div class="iframe-wrapper" data-src="https://bj.afreecatv.com/heeheezzz"></div>
+    <script>
+	var 당첨숫자들 = []; // 당첨 숫자를 저장하는 배열
+        var 선택된칸들 = []; // 선택된 칸을 저장하는 배열
+
+        // 그리드 아이템 클릭 이벤트 처리
+        function 칸클릭(칸번호) {
+            // 이미 선택된 칸이면 무시
+            if (선택된칸들.includes(칸번호)) {
+                return;
+            }
+
+            // 선택된 칸으로 표시
+            선택된칸들.push(칸번호);
+            var gridItem = document.getElementById("gridItem_" + 칸번호);
+            var card = gridItem.querySelector('.card');
+
+            // 카드 뒤집기 애니메이션 클래스 추가
+            card.classList.add('flipped');
+
+            // 당첨 여부 확인 (5% 확률)
+            var 당첨 = 당첨숫자들.length < 8 && (Math.random() < 0.2 || (36 - 선택된칸들.length) < (8 - 당첨숫자들.length));
+
+            // 당첨 숫자 추가
+            if (당첨) {
+                당첨숫자들.push(칸번호);
+                gridItem.style.backgroundColor = "yellow";
+                gridItem.querySelector('.front').textContent = "당첨";
+                gridItem.querySelector('.back').textContent = "당첨";
+                gridItem.querySelector('.back').classList.add('winner');
+                playSound('win.mp3'); // 당첨 효과음
+            } else {
+                gridItem.style.backgroundColor = "lightgray";
+                gridItem.querySelector('.front').textContent = "꽝";
+                gridItem.querySelector('.back').textContent = "꽝";
+                gridItem.querySelector('.back').classList.add('loser');
+                playSound('lose.mp3'); // 꽝 효과음
+            }
 
 
 
-   </div>
+            // 당첨 숫자가 5개가 되면 더 이상 뽑기를 허용하지 않음
+            if (당첨숫자들.length === 8) {
+                document.querySelectorAll('.grid-item').forEach(function(item) {
+                    item.removeAttribute('onclick');
+                });
+            }
+        }
 
-   <script>
-       // Function to load iframes sequentially
-       function loadIframesSequentially() {
-           var iframeWrappers = document.querySelectorAll('.iframe-wrapper');
+        // 10x10 그리드 생성
+        var gridContainer = document.getElementById("gridContainer");
+        for (var i = 1; i <= 36; i++) {
+            var gridItem = document.createElement("div");
+            gridItem.id = "gridItem_" + i;
+            gridItem.className = "grid-item";
+            
+            var card = document.createElement("div");
+            card.className = "card";
+            
+            var front = document.createElement("div");
+            front.className = "front";
+            front.textContent = i; // 숫자 표시 추가
+            
+            var back = document.createElement("div");
+            back.className = "back";
+            
+            card.appendChild(front);
+            card.appendChild(back);
+            
+            gridItem.appendChild(card);
+            gridItem.setAttribute("onclick", "칸클릭(" + i + ")");
+            gridContainer.appendChild(gridItem);
+        }
 
-           // Recursive function to load each iframe
-           function loadIframe(index) {
-               if (index < iframeWrappers.length) {
-                   var iframeWrapper = iframeWrappers[index];
-                   var iframe = document.createElement('iframe');
-                   iframe.src = iframeWrapper.getAttribute('data-src');
-                   iframe.width = '8';
-                   iframe.height = '8';
-                   iframe.title = 'Sandboxed iframe';
-                   iframeWrapper.appendChild(iframe);
-
-                   // Wait for the iframe to load before loading the next one
-                   iframe.onload = function() {
-                       loadIframe(index + 1);
-                   };
-               }
-           }
-
-           // Start loading iframes from index 0
-           loadIframe(0);
-       }
-
-       // Trigger sequential loading when the page loads
-       window.onload = function() {
-           loadIframesSequentially();
-       };
-
-
-
-
-        setInterval(() => {
-            location.reload(); // ÆäÀÌÁö »õ·Î°íÄ§
-        }, 750); // 5000ms = 5ÃÊ
-
-   </script>
+        // 효과음 재생 함수
+        function playSound(soundFile) {
+            var audio = new Audio(soundFile);
+            audio.play();
+        }
+    </script>
 </body>
 </html>
