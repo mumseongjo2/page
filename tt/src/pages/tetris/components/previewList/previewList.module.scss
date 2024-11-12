@@ -1,0 +1,30 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/neon';
+
+.wrapper {
+  @include neon.border(colors.$PRIMARY);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+
+  // height: 450px;
+  padding: 10px;
+  cursor: default;
+  background-color: colors.$BLACK;
+}
+
+.title {
+  @include neon.text(colors.$PRIMARY, 3rem);
+}
+
+.previewList {
+  @include neon.border(colors.$BLACK);
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 300px;
+  padding: 15px 0;
+}

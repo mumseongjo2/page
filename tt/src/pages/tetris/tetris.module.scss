@@ -1,0 +1,18 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/neon';
+
+.container {
+  position: relative;
+  display: flex;
+  gap: 100px;
+  align-items: center;
+  justify-content: center;
+  // height: 100%;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  height: 650px;
+}

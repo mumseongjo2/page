@@ -1,0 +1,22 @@
+@use '/src/styles/constants/colors';
+
+.wrapper {
+  min-height: 100vh;
+  background: colors.$BLACK;
+}
+
+.header {
+  padding: 10px 20px;
+  font-size: xx-large;
+  border-bottom: 2px solid colors.$WHITE;
+}
+
+.headerButton {
+  color: colors.$WHITE;
+  cursor: pointer;
+  background-color: colors.$BLACK;
+}
+
+.main {
+  padding: 20px;
+}

@@ -1,0 +1,46 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/neon';
+
+@mixin cell-color($color) {
+  background: $color;
+  border: 0.2rem solid $color;
+  box-shadow:
+    0 0 0.2rem colors.$WHITE,
+    0 0 0.2rem colors.$WHITE,
+    0 0 0.4rem $color,
+    inset 0 0 1.3rem $color;
+}
+
+.cell- {
+  &0 {
+    @include cell-color(colors.$TETROMINO_0);
+  }
+
+  &I {
+    @include cell-color(colors.$TETROMINO_I);
+  }
+
+  &J {
+    @include cell-color(colors.$TETROMINO_J);
+  }
+
+  &L {
+    @include cell-color(colors.$TETROMINO_L);
+  }
+
+  &O {
+    @include cell-color(colors.$TETROMINO_O);
+  }
+
+  &S {
+    @include cell-color(colors.$TETROMINO_S);
+  }
+
+  &T {
+    @include cell-color(colors.$TETROMINO_T);
+  }
+
+  &Z {
+    @include cell-color(colors.$TETROMINO_Z);
+  }
+}

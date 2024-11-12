@@ -1,0 +1,18 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/neon';
+
+.wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.button {
+  @include neon.text(colors.$PRIMARY, 2rem);
+  @include neon.border(colors.$PRIMARY, $hover: true);
+
+  padding: 30px 40px;
+  cursor: pointer;
+  background-color: colors.$BLACK;
+}

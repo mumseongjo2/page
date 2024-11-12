@@ -1,0 +1,58 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/neon';
+
+@mixin cell-color($color) {
+  background: $color;
+  border: 0.2rem solid $color;
+  box-shadow:
+    0 0 0.2rem colors.$WHITE,
+    0 0 0.2rem colors.$WHITE,
+    0 0 0.4rem $color,
+    inset 0 0 1.3rem $color;
+}
+
+.cell {
+  @include cell-color(colors.$BLACK);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: colors.$GRAY;
+  cursor: pointer;
+}
+
+.cell-check {
+  background-color: gray;
+}
+
+.cell-1 {
+  color: colors.$ONE_MINE;
+}
+
+.cell-2 {
+  color: colors.$TWO_MINE;
+}
+
+.cell-3 {
+  color: colors.$THREE_MINE;
+}
+
+.cell-4 {
+  color: colors.$FOUR_MINE;
+}
+
+.cell-5 {
+  color: colors.$FIVE_MINE;
+}
+
+.cell-6 {
+  color: colors.$SIX_MINE;
+}
+
+.cell-7 {
+  color: colors.$SEVEN_MINE;
+}
+
+.cell-8 {
+  color: colors.$EIGHT_MINE;
+}

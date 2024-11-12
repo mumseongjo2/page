@@ -1,0 +1,26 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/neon';
+
+.wrapper {
+  @include neon.border(colors.$PRIMARY);
+
+  padding: 15px 20px;
+  cursor: default;
+  background-color: colors.$BLACK;
+}
+
+.box {
+  @include neon.text(colors.$GRAY, 3rem);
+
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.title {
+
+}
+
+.content {
+
+}

@@ -1,0 +1,12 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/neon';
+
+.infobar {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.infoText {
+  @include neon.text(colors.$GRAY, xx-large);
+}

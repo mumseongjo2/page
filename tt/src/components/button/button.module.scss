@@ -1,0 +1,11 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/neon';
+
+.button {
+  @include neon.border(colors.$PRIMARY, $hover: true);
+  @include neon.text(colors.$PRIMARY, var(--size));
+
+  padding: 30px 50px;
+  cursor: pointer;
+  background-color: colors.$BLACK;
+}

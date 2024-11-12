@@ -1,0 +1,11 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/neon';
+
+.box {
+  @include neon.border(colors.$TERTIARY);
+  @include neon.text(colors.$TERTIARY, 2rem);
+
+  display: flex;
+  gap: 10px;
+  padding: 10px 30px;
+}

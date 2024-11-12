@@ -1,0 +1,16 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/neon';
+
+.wrapper {
+  display: flex;
+  gap: 100px;
+}
+
+.button {
+  @include neon.border(colors.$SECONDARY, $hover: true);
+  @include neon.text(colors.$GRAY, $size: xx-large);
+
+  padding: 40px;
+  cursor: pointer;
+  background-color: colors.$BLACK;
+}

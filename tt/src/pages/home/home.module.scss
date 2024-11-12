@@ -1,0 +1,10 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/neon';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  @include neon.text(colors.$SECONDARY, $size: xx-large);
+}
